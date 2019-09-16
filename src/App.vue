@@ -15,6 +15,7 @@ export default {
   },
   methods() {
     1111111111111
+    222222222222
   }
 }
 </script>
