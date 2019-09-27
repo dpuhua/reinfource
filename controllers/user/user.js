@@ -1,8 +1,8 @@
-const UserModel = require('../models/user')
+const UserModel = require('../../models/user')
 class UserController {
   static async create(ctx) {
     let req = ctx.request.body
-    if (req.nickName && req.password) {
+    if (req.nickName && req.mobile && req.password) {
       try {
         const ret = await UserModel.createUser(req)
         const data = await UserModel.getUserDetail(ret.id)
@@ -24,7 +24,7 @@ class UserController {
       ctx.response.status = 416
       ctx.body = {
         code: 200,
-        msg: '姓名和手机号不能为空'
+        msg: '姓名、手机号、密码不能为空'
       }
     }
   }
@@ -53,6 +53,19 @@ class UserController {
       ctx.body = {
         code: 416,
         msg: 'id不能为空'
+      }
+    }
+  }
+
+  static async login(ctx) {
+    let req = ctx.request.body;
+    if (req.mobile && req.password) {
+      
+    } else {
+      ctx.response.status = 416;
+      ctx.body = {
+        code: -1,
+        msg: '请输入手机号和密码'
       }
     }
   }

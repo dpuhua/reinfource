@@ -22,6 +22,9 @@ class UserModel {
        }
      })
    }
+   static async login(data) {
+     
+   }
  }
 
  module.exports = UserModel
