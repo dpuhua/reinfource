@@ -1,11 +1,22 @@
-const UserModel = require('../../models/user')
-class UserController {
-  static async create(ctx) {
-    let req = ctx.request.body
+import UserModel from '../../models/user'
+import jwt from 'jwt-simple'
+import tokenConfig from '../../config/token'
+
+const getToken = (name: string) => {
+  const payload = {
+    exp: Date.now() + tokenConfig.expires,
+    name
+  }
+  return jwt.encode(payload, tokenConfig.secret)
+}
+
+export default class UserController {
+  static async create(ctx: any) {
+    const req = ctx.request.body
     if (req.nickName && req.mobile && req.password) {
       try {
-        const ret = await UserModel.createUser(req)
-        const data = await UserModel.getUserDetail(ret.id)
+        const ret = await UserModel.createItem(req)
+        const data = await UserModel.getById(ret.rid)
         ctx.response.status = 200
         ctx.body = {
           code: 200,
@@ -29,11 +40,11 @@ class UserController {
     }
   }
 
-  static async detail(ctx) {
-    let id = ctx.params.id
+  static async detail(ctx: any) {
+    const id = ctx.params.id
     if (id) {
       try {
-        let data = await UserModel.getUserDetail(id)
+        const data = await UserModel.getById(id)
         ctx.response.status = 200
         ctx.body = {
           code: 200,
@@ -44,8 +55,7 @@ class UserController {
         ctx.response.status = 412
         ctx.body = {
           code: 412,
-          msg: '查询失败',
-          data
+          msg: '查询失败'
         }
       }
     } else {
@@ -57,12 +67,20 @@ class UserController {
     }
   }
 
-  static async login(ctx) {
-    let req = ctx.request.body;
+  static async login(ctx: any) {
+    const req = ctx.request.body
     if (req.mobile && req.password) {
-      
+      const data = await UserModel.getByMobile(req.mobile)
+      const token = getToken(data.nickName)
+      ctx.response.status = 200
+      ctx.body = {
+        code: 200,
+        msg: '查询成功',
+        token,
+        data
+      }
     } else {
-      ctx.response.status = 416;
+      ctx.response.status = 416
       ctx.body = {
         code: -1,
         msg: '请输入手机号和密码'
@@ -70,5 +88,3 @@ class UserController {
     }
   }
 }
-
-module.exports = UserController

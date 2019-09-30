@@ -4,9 +4,12 @@
  * Module dependencies.
  */
 
-var app = require('../app');
+var app = require('../dist/app');
+// tslint:disable-next-line: no-var-requires
 var debug = require('debug')('demo:server');
 var http = require('http');
+
+app = app.default
 
 /**
  * Get port from environment and store in Express.
@@ -18,6 +21,7 @@ var port = normalizePort(process.env.PORT || '8687');
 /**
  * Create HTTP server.
  */
+
 
 var server = http.createServer(app.callback());
 

@@ -1,5 +1,7 @@
-const router = require('koa-router')()
-const UserController = require('../controllers/user/user')
+import UserController from '../controllers/user/user'
+import Router from 'koa-router'
+
+const router = new Router()
 
 router.prefix('/user')
 
@@ -7,12 +9,12 @@ router.get('/getUserById/:id', UserController.detail)
 router.post('/register', UserController.create)
 router.post('/login', UserController.login)
 
-router.get('/', function (ctx, next) {
+router.get('/', (ctx, next) => {
   ctx.body = 'this is a user response!'
 })
 
-router.get('/bar', function (ctx, next) {
+router.get('/bar', (ctx, next) => {
   ctx.body = 'this is a user/bar response'
 })
 
-module.exports = router
+export default router
