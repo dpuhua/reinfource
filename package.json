@@ -5,6 +5,7 @@
   "scripts": {
     "start": "tsc && node bin/www",
     "dev": "./node_modules/.bin/nodemon ts-node bin/www",
+    "build": "webpack",
     "prd": "pm2 start bin/www",
     "test": "echo \"Error: no test specified\" && exit 1",
     "tslint": "tslint --init"
@@ -44,8 +45,12 @@
     "@types/node": "^12.7.8",
     "@types/validator": "^10.11.3",
     "nodemon": "^1.19.1",
+    "ts-loader": "^6.2.0",
     "ts-node": "^8.4.1",
     "tslint": "^5.20.0",
-    "typescript": "^3.6.3"
+    "typescript": "^3.6.3",
+    "webpack": "^4.41.0",
+    "webpack-cli": "^3.3.9",
+    "webpack-node-externals": "^1.7.2"
   }
 }

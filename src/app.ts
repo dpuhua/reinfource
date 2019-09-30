@@ -11,16 +11,11 @@ import koaStatic from 'koa-static'
 import index from './routes/index'
 import user from './routes/user'
 import tokenConfig from './config/token'
-import sequelize from './config/db'
-
-// sequelize.addModels([__dirname, '/models'])
-
-// error handler
 
 // middlewares
 app.use(cors())
 app.use(bodyparser({
-  enableTypes:['json', 'form', 'text']
+  enableTypes: ['json', 'form', 'text']
 }))
 app.use(json())
 app.use(logger())

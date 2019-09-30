@@ -1,29 +1,17 @@
 # reinfource
-
-## Project setup
-```
-yarn install
-```
-
-### Compiles and hot-reloads for development
-```
-yarn run serve
-```
-
-### Compiles and minifies for production
-```
-yarn run build
-```
-
-### Run your tests
-```
-yarn run test
-```
-
-### Lints and fixes files
-```
-yarn run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+|--src                              资源目录
+|   |--app.ts                       入口文件
+|   |--config                       配置文件
+|   |   |--token.ts                 token配置
+|   |   |--whitelist.ts             白名单配置
+|   |--controllers                  控制层--逻辑层
+|   |   |--user                     用户相关逻辑
+|   |--db                           数据库
+|   |--models                       表
+|   |   |--base_table.ts            表基类
+|   |   |--user.ts                  用户表
+|   |--public                       公共资源目录
+|   |--routes                       路由目录
+|   |--views                        中间页面层
+|--dist                             打包文件
+|--bin                              启动文件
