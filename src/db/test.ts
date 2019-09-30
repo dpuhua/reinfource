@@ -22,6 +22,10 @@ const sequelize = new Sequelize('test', 'root', 'dph123', {
 })
 
 sequelize.addModels([user])
+// 自动创建表 force为true时会先删除再创建
+user.sync({
+  force: false
+})
 
 sequelize.authenticate().then(() => {
   console.log('Connection has been established successfully')
@@ -29,9 +33,5 @@ sequelize.authenticate().then(() => {
 .catch((err: any) => {
   console.log('Unable to connect to the database:', err)
 })
-
-// sequelize.define('user', {
-//   title: ''
-// })
 
 export { sequelize, user }

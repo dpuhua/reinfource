@@ -1,29 +1,21 @@
 /**
  * schema user
  */
-import { Table, Column, Model } from 'sequelize-typescript'
+import { Table, Column } from 'sequelize-typescript'
 import BaseTable from '../base_table/base_table'
 
 @Table({
   tableName: 'user'
 })
-export default class User extends Model<User> {
-  // 通过rid查询
-  static async getById(rid: number) {
+export default class User extends BaseTable {
+  static async getByMobile<T extends User>(mobile: string) {
     const item = await this.findOne({
-      raw: true,
       where: {
-        rid
+        mobile
       }
     })
-    return item
+    return item as T
   }
-  @Column({
-    primaryKey: true,
-    allowNull: true,
-    autoIncrement: true
-  })
-  id!: number
 
   @Column({
     allowNull: true
