@@ -6,8 +6,8 @@ const router = new Router()
 router.prefix('/user')
 
 router.get('/getUserById/:id', UserController.detail)
-// router.post('/register', UserController.create)
-// router.post('/login', UserController.login)
+router.post('/register', UserController.create)
+router.post('/login', UserController.login)
 
 router.get('/', (ctx, next) => {
   ctx.body = 'this is a user response!'

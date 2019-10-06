@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "tsc && node bin/www",
-    "dev": "./node_modules/.bin/nodemon ts-node bin/www",
+    "dev": "./node_modules/.bin/nodemon tsc && node bin/www",
     "build": "webpack",
     "prd": "pm2 start bin/www",
     "test": "echo \"Error: no test specified\" && exit 1",
