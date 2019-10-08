@@ -18,10 +18,10 @@ export default class User extends baseTable {
     return item as T
   }
 
-  static async getByNickName<T extends User>(nickName: string) {
+  static async getByuserName<T extends User>(userName: string) {
     const item = await this.findOne({
       where: {
-        nickName
+        userName
       }
     })
     return item as T
@@ -30,7 +30,7 @@ export default class User extends baseTable {
   @Column({
     allowNull: true
   })
-  nickName!: string
+  userName!: string
 
   @Column({
     allowNull: true

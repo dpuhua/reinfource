@@ -13,7 +13,7 @@ const getToken = (name: string) => {
 export default class UserController {
   static async create(ctx: any) {
     const req = ctx.request.body
-    if (req.nickName && req.mobile && req.password) {
+    if (req.userName && req.mobile && req.password) {
       try {
         const ret = await user.createItem(req)
         const data = await user.getById(ret.rid)
@@ -77,7 +77,7 @@ export default class UserController {
 
   static async register(ctx: any) {
     const req = ctx.request.body
-    if (req.mobile && req.nickName && req.password) {
+    if (req.mobile && req.userName && req.password) {
       try {
         let data = await user.getByMobile(req.mobile)
         if (data) {
@@ -87,7 +87,7 @@ export default class UserController {
             msg: '手机号已存在'
           }
         } else {
-          data = await user.getByNickName(req.nickName)
+          data = await user.getByuserName(req.userName)
           if (data) {
             ctx.response.status = 416
             ctx.body = {
@@ -121,7 +121,7 @@ export default class UserController {
     if (req.mobile && req.password) {
       try {
         const data = await user.getByMobile(req.mobile)
-        const token = getToken(data.nickName)
+        const token = getToken(data.userName)
         ctx.response.status = 200
         ctx.body = {
           code: 1,
