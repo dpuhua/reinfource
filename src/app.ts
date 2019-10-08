@@ -26,14 +26,15 @@ app.use(views(__dirname + '/views', {
 
 // logger
 app.use(async (ctx, next) => {
+  console.log(ctx);
+  ctx.set('Access-Control-Allow-Origin', '*')
   ctx.set('Access-Control-Allow-Credentials', 'true')
-  ctx.set('Access-Control-Allow-Origin', ctx.request.header.origin)
   await next()
 })
 
 // valid
 app.use(koaJwt({secret: tokenConfig.secret}).unless({
-  path: [/^\/user\/(login|register)/]
+  path: [/^\/api\/user\/(login|register)/]
 }))
 
 // routes
