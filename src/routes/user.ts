@@ -6,7 +6,7 @@ const router = new Router()
 router.prefix('/user')
 
 router.get('/getUserById/:id', UserController.detail)
-router.post('/register', UserController.create)
+router.post('/register', UserController.register)
 router.post('/login', UserController.login)
 
 router.get('/', (ctx, next) => {

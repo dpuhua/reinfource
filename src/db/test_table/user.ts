@@ -1,7 +1,7 @@
 /**
  * schema user
  */
-import { Table, Column, Model } from 'sequelize-typescript'
+import { Table, Column } from 'sequelize-typescript'
 import baseTable from '../base_table/base_table'
 
 @Table({

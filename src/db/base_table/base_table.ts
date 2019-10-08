@@ -10,13 +10,11 @@ import { Table, Column, Model } from 'sequelize-typescript'
 export default class BaseTable extends Model<BaseTable> {
   // 添加
   static async createItem<T extends BaseTable>(item: T) {
-    console.log(233333333333333);
-
     return await this.create(item)
   }
 
   // 删除
-  static async deleteById<T extends BaseTable>(rid: number) {
+  static async deleteById(rid: number) {
     return await this.destroy({
       where: {
         rid

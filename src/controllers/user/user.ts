@@ -15,12 +15,7 @@ export default class UserController {
     const req = ctx.request.body
     if (req.nickName && req.mobile && req.password) {
       try {
-        console.log(11111111111111111111111)
-
         const ret = await user.createItem(req)
-
-        console.log(22222222222222222222)
-
         const data = await user.getById(ret.rid)
         ctx.response.status = 200
         ctx.body = {
@@ -29,13 +24,11 @@ export default class UserController {
           data
         }
       } catch (err) {
-        console.log(err);
-
         ctx.response.status = 412
         ctx.body = {
           code: -1,
           msg: '创建失败',
-          data: err
+          err
         }
       }
     } else {
@@ -84,31 +77,37 @@ export default class UserController {
 
   static async register(ctx: any) {
     const req = ctx.request.body
-    console.log(req);
-
     if (req.mobile && req.nickName && req.password) {
-      let data = await user.getByMobile(req.mobile)
-      if (data) {
-        ctx.response.static = 416
-        ctx.body = {
-          code: -1,
-          msg: '手机号已存在'
-        }
-      } else {
-        data = await user.getByNickName(req.nickName)
+      try {
+        let data = await user.getByMobile(req.mobile)
         if (data) {
-          ctx.response.static = 416
+          ctx.response.status = 416
           ctx.body = {
             code: -1,
-            msg: '用户名已存在'
+            msg: '手机号已存在'
           }
         } else {
-          UserController.create(ctx)
+          data = await user.getByNickName(req.nickName)
+          if (data) {
+            ctx.response.status = 416
+            ctx.body = {
+              code: -1,
+              msg: '用户名已存在'
+            }
+          } else {
+            await UserController.create(ctx)
+          }
+        }
+      } catch (err) {
+        ctx.response.status = 412
+        ctx.body = {
+          code: -1,
+          msg: '创建失败',
+          err
         }
       }
-
     } else {
-      ctx.response.static = 416
+      ctx.response.status = 416
       ctx.body = {
         code: -1,
         msg: '手机号、用户名、密码不能为空'
@@ -120,14 +119,23 @@ export default class UserController {
   static async login(ctx: any) {
     const req = ctx.request.body
     if (req.mobile && req.password) {
-      const data = await user.getByMobile(req.mobile)
-      const token = getToken(data.nickName)
-      ctx.response.status = 200
-      ctx.body = {
-        code: 1,
-        msg: '查询成功',
-        token,
-        data
+      try {
+        const data = await user.getByMobile(req.mobile)
+        const token = getToken(data.nickName)
+        ctx.response.status = 200
+        ctx.body = {
+          code: 1,
+          msg: '登录成功',
+          token,
+          data
+        }
+      } catch (err) {
+        ctx.status = 412
+        ctx.body = {
+          code: -1,
+          msg: '登录失败',
+          err
+        }
       }
     } else {
       ctx.response.status = 416

@@ -27,13 +27,12 @@ app.use(views(__dirname + '/views', {
 // logger
 app.use(async (ctx, next) => {
   await next()
-  console.log(`${ctx.method} ${ctx.url}`)
 })
 
 // valid
-// app.use(koaJwt({secret: tokenConfig.secret}).unless({
-//   path: [/^\/user\/(login|register)/]
-// }))
+app.use(koaJwt({secret: tokenConfig.secret}).unless({
+  path: [/^\/user\/(login|register)/]
+}))
 
 // routes
 // app.use(index.routes(), index.allowedMethods())
