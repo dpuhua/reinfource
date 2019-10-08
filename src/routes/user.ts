@@ -3,7 +3,7 @@ import Router from 'koa-router'
 
 const router = new Router()
 
-router.prefix('/user')
+router.prefix('/api/user')
 
 router.get('/getUserById/:id', UserController.detail)
 router.post('/register', UserController.register)

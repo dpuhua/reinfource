@@ -4,7 +4,7 @@ import views from 'koa-views'
 import json from 'koa-json'
 import bodyparser from 'koa-bodyparser'
 import logger from 'koa-logger'
-import cors from 'koa-cors'
+import cors from 'koa2-cors'
 import koaJwt from 'koa-jwt'
 import koaStatic from 'koa-static'
 
@@ -26,6 +26,8 @@ app.use(views(__dirname + '/views', {
 
 // logger
 app.use(async (ctx, next) => {
+  ctx.set('Access-Control-Allow-Credentials', 'true')
+  ctx.set('Access-Control-Allow-Origin', ctx.request.header.origin)
   await next()
 })
 
