@@ -8,13 +8,10 @@ import { Table, Column, Model } from 'sequelize-typescript'
 })
 
 export default class BaseTable extends Model<BaseTable> {
-  constructor() {
-    super()
-  }
   // 添加
   static async createItem<T extends BaseTable>(item: T) {
     console.log(233333333333333);
-    
+
     return await this.create(item)
   }
 

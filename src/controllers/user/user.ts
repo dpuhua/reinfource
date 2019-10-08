@@ -18,9 +18,9 @@ export default class UserController {
         console.log(11111111111111111111111)
 
         const ret = await user.createItem(req)
-        
+
         console.log(22222222222222222222)
-        
+
         const data = await user.getById(ret.rid)
         ctx.response.status = 200
         ctx.body = {
@@ -30,7 +30,7 @@ export default class UserController {
         }
       } catch (err) {
         console.log(err);
-        
+
         ctx.response.status = 412
         ctx.body = {
           code: -1,
@@ -85,7 +85,7 @@ export default class UserController {
   static async register(ctx: any) {
     const req = ctx.request.body
     console.log(req);
-    
+
     if (req.mobile && req.nickName && req.password) {
       let data = await user.getByMobile(req.mobile)
       if (data) {
@@ -114,7 +114,7 @@ export default class UserController {
         msg: '手机号、用户名、密码不能为空'
       }
     }
-    
+
   }
 
   static async login(ctx: any) {
