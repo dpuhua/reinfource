@@ -17,14 +17,12 @@ export default class UserController {
       try {
         const ret = await user.createItem(req)
         const data = await user.getById(ret.rid)
-        ctx.response.status = 200
         ctx.body = {
           code: 1,
           msg: '创建成功',
           data
         }
       } catch (err) {
-        ctx.response.status = 412
         ctx.body = {
           code: -1,
           msg: '创建失败',
@@ -32,7 +30,6 @@ export default class UserController {
         }
       }
     } else {
-      ctx.response.status = 416
       ctx.body = {
         code: -1,
         msg: '姓名、手机号、密码不能为空'
@@ -45,7 +42,6 @@ export default class UserController {
     if (id) {
       try {
         const data = await user.getById(id)
-        ctx.response.status = 200
         if (data) {
           ctx.body = {
             code: 1,
@@ -59,7 +55,6 @@ export default class UserController {
           }
         }
       } catch (err) {
-        ctx.response.status = 412
         ctx.body = {
           code: -1,
           msg: '查询失败',
@@ -67,7 +62,6 @@ export default class UserController {
         }
       }
     } else {
-      ctx.response.status = 416
       ctx.body = {
         code: -1,
         msg: 'id不能为空'
@@ -81,7 +75,6 @@ export default class UserController {
       try {
         let data = await user.getByMobile(req.mobile)
         if (data) {
-          ctx.response.status = 416
           ctx.body = {
             code: -1,
             msg: '手机号已存在'
@@ -89,7 +82,6 @@ export default class UserController {
         } else {
           data = await user.getByuserName(req.userName)
           if (data) {
-            ctx.response.status = 416
             ctx.body = {
               code: -1,
               msg: '用户名已存在'
@@ -99,7 +91,6 @@ export default class UserController {
           }
         }
       } catch (err) {
-        ctx.response.status = 412
         ctx.body = {
           code: -1,
           msg: '创建失败',
@@ -107,7 +98,6 @@ export default class UserController {
         }
       }
     } else {
-      ctx.response.status = 416
       ctx.body = {
         code: -1,
         msg: '手机号、用户名、密码不能为空'
@@ -121,16 +111,28 @@ export default class UserController {
     if (req.mobile && req.password) {
       try {
         const data = await user.getByMobile(req.mobile)
-        const token = getToken(data.userName)
-        ctx.response.status = 200
-        ctx.body = {
-          code: 1,
-          msg: '登录成功',
-          token,
-          data
+        if (data) {
+          if (data.password === req.password) {
+            const token = getToken(data.userName)
+            ctx.body = {
+              code: 1,
+              msg: '登录成功',
+              token
+            }
+          } else {
+            ctx.body = {
+              code: -1,
+              msg: '密码错误'
+            }
+          }
+        } else {
+          // 无用户
+          ctx.body = {
+            code: -1,
+            msg: '用户不存在'
+          }
         }
       } catch (err) {
-        ctx.status = 412
         ctx.body = {
           code: -1,
           msg: '登录失败',
@@ -138,7 +140,6 @@ export default class UserController {
         }
       }
     } else {
-      ctx.response.status = 416
       ctx.body = {
         code: -1,
         msg: '请输入手机号和密码'
