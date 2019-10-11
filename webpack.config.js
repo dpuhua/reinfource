@@ -1,4 +1,5 @@
 const nodeExternal = require('webpack-node-externals')
+// const UglifyJSWebpackPlugin = require('uglify-es')
 module.exports = {
   // 表明node环境
   target: 'node',
@@ -6,12 +7,15 @@ module.exports = {
     'app': './src/app.ts'
   },
   output: {
-    filename: '[name].bundle.js'
+    filename: '[name].js'
+  },
+  resolve: {
+    extensions: ['.js', 'json', '.ts', '.tsx']
   },
   mode: 'none',
   externals: [
     // 不打包node的部分
-    nodeExternal()
+    nodeExternal(),
   ],
   module: {
     unknownContextCritical: false,
@@ -23,5 +27,8 @@ module.exports = {
         }
       }
     ]
-  }
+  },
+  plugins: [
+    // new UglifyJSWebpackPlugin()
+  ]
 } 

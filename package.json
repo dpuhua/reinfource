@@ -3,10 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "tsc && node bin/www",
-    "dev": "./node_modules/.bin/nodemon tsc && node bin/www",
+    "start": "node dist/app.js",
     "build": "webpack",
-    "prd": "pm2 start bin/www",
+    "dev": "./node_modules/.bin/nodemon tsc && node dist/app.js",
+    "prd": "pm2 start dist/app.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "tslint": "tslint --init"
   },
@@ -51,6 +51,8 @@
     "ts-node": "^8.4.1",
     "tslint": "^5.20.0",
     "typescript": "^3.6.3",
+    "uglify-es": "^3.3.9",
+    "uglifyjs-webpack-plugin": "^2.2.0",
     "webpack": "^4.41.0",
     "webpack-cli": "^3.3.9",
     "webpack-node-externals": "^1.7.2"

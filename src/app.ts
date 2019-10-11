@@ -8,6 +8,7 @@ import cors from 'koa2-cors'
 import koaJwt from 'koa-jwt'
 import jwt from 'jwt-simple'
 import koaStatic from 'koa-static'
+import http from 'http'
 
 import index from './routes/index'
 import user from './routes/user'
@@ -85,4 +86,10 @@ app.on('error', (err, ctx) => {
   console.error('server error', err, ctx)
 });
 
-export default app
+const server = http.createServer(app.callback());
+
+/**
+ * Listen on provided port, on all network interfaces.
+ */
+
+server.listen('8687');
