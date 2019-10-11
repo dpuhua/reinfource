@@ -8,7 +8,7 @@ module.exports = {
   output: {
     filename: '[name].bundle.js'
   },
-  mode: 'development',
+  mode: 'none',
   externals: [
     // 不打包node的部分
     nodeExternal()
@@ -17,7 +17,7 @@ module.exports = {
     unknownContextCritical: false,
     rules: [
       {
-        test: /\.ts?$/,
+        test: /\.tsx?$/,
         use: {
           loader: 'ts-loader'
         }
