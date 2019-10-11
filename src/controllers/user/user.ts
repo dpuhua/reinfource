@@ -108,9 +108,9 @@ export default class UserController {
 
   static async login(ctx: any) {
     const req = ctx.request.body
-    if (req.mobile && req.password) {
+    if (req.name && req.password) {
       try {
-        const data = await user.getByMobile(req.mobile)
+        const data = await user.getByMobile(req.name)
         if (data) {
           if (data.password === req.password) {
             const token = getToken(data.userName)
