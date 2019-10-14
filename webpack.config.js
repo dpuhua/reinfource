@@ -1,5 +1,6 @@
 const nodeExternal = require('webpack-node-externals')
 const UglifyESWebpackPlugin = require('uglify-es-webpack-plugin')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 module.exports = {
   // 表明node环境
   target: 'node',
@@ -18,7 +19,8 @@ module.exports = {
     nodeExternal(),
   ],
   plugins: [
-    new UglifyESWebpackPlugin()
+    new UglifyESWebpackPlugin(),
+    new CleanWebpackPlugin()
   ],
   module: {
     unknownContextCritical: false,
