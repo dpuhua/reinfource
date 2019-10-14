@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "node dist/app.js",
+    "start": "node tsc && dist/app.js",
+    "dev": "./node_modules/.bin/nodemon",
     "build": "webpack",
-    "dev": "./node_modules/.bin/nodemon tsc && dist/app.js",
     "prd": "pm2 start dist/app.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "tslint": "tslint --init"
