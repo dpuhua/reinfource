@@ -63,12 +63,6 @@ app.use(async (ctx, next) => {
         code: -17,
         msg: '登录已失效'
       }
-    } else if (expTime < 60 * 60 * 1000) {
-      ctx.body = {
-        code: -19,
-        msg: 'token即将过期，需要刷新',
-        exp: expTime
-      }
     } else {
       await next()
     }

@@ -1,6 +1,7 @@
 import { user } from '../../db/test'
 import jwt from 'jwt-simple'
 import tokenConfig from '../../config/token'
+import Valid from '../../tools/valid'
 
 const getToken = (name: string) => {
   const payload = {
@@ -73,6 +74,13 @@ export default class UserController {
     const req = ctx.request.body
     if (req.mobile && req.userName && req.password) {
       try {
+        if (Valid.validMobile(req.userName)) {
+          ctx.body = {
+            code: -1,
+            msg: '用户名不能为11位数字'
+          }
+          return
+        }
         let data = await user.getByMobile(req.mobile)
         if (data) {
           ctx.body = {
@@ -110,14 +118,23 @@ export default class UserController {
     const req = ctx.request.body
     if (req.name && req.password) {
       try {
-        const data = await user.getByMobile(req.name)
+        let data = await user.getByMobile(req.name)
+        if (!data) {
+          data = await user.getByuserName(req.name)
+        }
         if (data) {
           if (data.password === req.password) {
             const token = getToken(data.userName)
+            const Data = {
+              id: data.rid,
+              userName: data.userName,
+              mobile: data.mobile
+            }
             ctx.body = {
               code: 1,
               msg: '登录成功',
-              token
+              token,
+              Data
             }
           } else {
             ctx.body = {
