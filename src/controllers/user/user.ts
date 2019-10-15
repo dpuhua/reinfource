@@ -163,4 +163,26 @@ export default class UserController {
       }
     }
   }
+  static async asyncModel(ctx: any) { // 模型同步
+    try {
+      const data = await user.asyncModel()
+      if (data) {
+        ctx.body = {
+          code: 1,
+          msg: '同步成功'
+        }
+      } else {
+        ctx.body = {
+          code: -1,
+          msg: '同步失败'
+        }
+      }
+    } catch (err) {
+      ctx.body = {
+        code: -1,
+        msg: '同步失败',
+        err
+      }
+    }
+  }
 }

@@ -16,5 +16,6 @@ router.get('/', (ctx, next) => {
 router.get('/bar', (ctx, next) => {
   ctx.body = 'this is a user/bar response'
 })
+router.get('/asyncModel', UserController.asyncModel)
 
 export default router

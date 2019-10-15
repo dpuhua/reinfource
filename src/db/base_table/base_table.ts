@@ -50,6 +50,14 @@ export default class BaseTable extends Model<BaseTable> {
     return item as T
   }
 
+  // 模型同步
+  static async asyncModel<T extends BaseTable>() {
+    const item = await this.sync({
+      alter: true
+    })
+    return item as T
+  }
+
   @Column({
     primaryKey: true,
     autoIncrement: true

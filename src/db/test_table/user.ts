@@ -42,5 +42,10 @@ export default class User extends baseTable {
   })
   password!: string
 
+  @Column({
+    allowNull: true
+  })
+  sex!: string
+
   freezeTableName: boolean = true
 }
