@@ -23,14 +23,9 @@ export default class BaseTable extends Model<BaseTable> {
   }
 
   // 更新
-  static async updateItemById<T extends BaseTable>(item: T, rid: number) {
-    const objItem = await this.getById(rid) as T;
-    for (const key in item) {
-      if (item[key]) {
-        objItem[key] = item[key]
-      }
-    }
-    return await objItem.save()
+  static async updateItemById(item: any, rid: number) {
+    const data = await this.update(item, { where: { rid } })
+    return data
   }
 
   // 查询所有

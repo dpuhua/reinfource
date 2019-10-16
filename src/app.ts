@@ -52,7 +52,7 @@ app.use(async (ctx, next) => {
   })
 })
 
-const widthPath = /^\/api\/user\/(login|register)/
+const widthPath = /^\/api\/user\/(login|register|forget)/
 
 // valid
 app.use(koaJwt({secret: tokenConfig.secret}).unless({

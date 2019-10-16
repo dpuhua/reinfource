@@ -8,6 +8,7 @@ router.prefix('/api/user')
 router.get('/getUserById/:id', UserController.detail)
 router.post('/register', UserController.register)
 router.post('/login', UserController.login)
+router.post('/forget', UserController.forget)
 
 router.get('/', (ctx, next) => {
   ctx.body = 'this is a user response!'

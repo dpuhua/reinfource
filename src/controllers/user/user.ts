@@ -163,6 +163,55 @@ export default class UserController {
       }
     }
   }
+  static async forget(ctx: any) { // 忘记密码
+    const req = ctx.request.body
+    if (req.userName && req.mobile && req.password) {
+      try {
+        const data = await user.getByuserName(req.userName)
+        if (data) {
+          if (data.mobile === req.mobile) {
+            const upData = await user.updateItemById({
+              userName: req.userName,
+              mobile: req.mobile,
+              password: req.password
+            }, data.rid)
+            if (upData) {
+              ctx.body = {
+                code: 1,
+                msg: '重置成功'
+              }
+            } else {
+              ctx.body = {
+                code: -1,
+                msg: '重置失败'
+              }
+            }
+          } else {
+            ctx.body = {
+              code: -1,
+              msg: '手机号错误'
+            }
+          }
+        } else {
+          ctx.body = {
+            code: -1,
+            msg: '用户名不存在'
+          }
+        }
+      } catch (err) {
+        ctx.body = {
+          code: -1,
+          msg: '重置失败',
+          err
+        }
+      }
+    } else {
+      ctx.body = {
+        code: -1,
+        msg: '用户名、手机号、密码不能为空'
+      }
+    }
+  }
   static async asyncModel(ctx: any) { // 模型同步
     try {
       const data = await user.asyncModel()
