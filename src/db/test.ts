@@ -1,3 +1,4 @@
+// test 数据库
 import { Sequelize } from 'sequelize-typescript'
 import user from './test_table/user'
 

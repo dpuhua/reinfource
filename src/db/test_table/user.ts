@@ -1,5 +1,5 @@
 /**
- * schema user
+ * schema user, user表
  */
 import { Table, Column } from 'sequelize-typescript'
 import baseTable from '../base_table/base_table'
