@@ -14,10 +14,10 @@ RUN npm build
 
 # 配置环境变量
 ENV HOST 0.0.0.0
-ENV PORT 8000
+ENV PORT 8687
 
 # 容器对外暴露的端口号
-EXPOSE 8080
+EXPOSE 8687
 
 # 容器启动是执行的命令，类似npm run start
 CMD [ "npm", "dist" ]
