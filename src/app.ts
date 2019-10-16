@@ -31,6 +31,12 @@ app.use(async (ctx, next) => {
   ctx.set('Access-Control-Allow-Origin', '*')
   ctx.set('Access-Control-Allow-Credentials', 'true')
   await next().then( () => {
+    if (ctx.status === 404) {
+      ctx.body = {
+        code: -1,
+        msg: '接口不存在'
+      }
+    }
     // 请求成功返回200状态码，数据正确性通过body的code区分
     ctx.status = 200
   }).catch( (err) => {
