@@ -20,4 +20,4 @@ ENV PORT 8687
 EXPOSE 8687
 
 # 容器启动是执行的命令，类似npm run start
-CMD [ "npm", "dist" ]
+CMD [ "npm", "run", "dist" ]
