@@ -1,4 +1,4 @@
-import { user } from '../../db/test'
+import { sequelize, user } from '../../db/test'
 import jwt from 'jwt-simple'
 import tokenConfig from '../../config/token'
 import Valid from '../../tools/valid'
@@ -34,6 +34,38 @@ export default class UserController {
       ctx.body = {
         code: -1,
         msg: '姓名、手机号、密码不能为空'
+      }
+    }
+  }
+
+  static async test(ctx: any) {
+    const id = ctx.params.id
+    if (id) {
+      try {
+        const data = await sequelize.query('select * from user', { raw: true, model: user})
+        if (data) {
+          ctx.body = {
+            code: 11,
+            msg: '查询成功',
+            data
+          }
+        } else {
+          ctx.body = {
+            code: -1,
+            meg: '用户不存在'
+          }
+        }
+      } catch (err) {
+        ctx.body = {
+          code: -1,
+          msg: '查询失败',
+          err
+        }
+      }
+    } else {
+      ctx.body = {
+        code: -1,
+        msg: 'id不能为空'
       }
     }
   }

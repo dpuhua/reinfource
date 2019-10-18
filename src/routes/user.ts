@@ -10,6 +10,8 @@ router.post('/register', UserController.register)
 router.post('/login', UserController.login)
 router.post('/forget', UserController.forget)
 
+router.get('/test/:id', UserController.test)
+
 router.get('/', (ctx, next) => {
   ctx.body = 'this is a user response!'
 })
