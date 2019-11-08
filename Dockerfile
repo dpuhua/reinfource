@@ -4,9 +4,9 @@ FROM node:10.8.0
 LABEL name="dph"
 
 # 将根目录下的文件都copy到container文件系统的app文件夹下
-ADD . /app1/
+ADD . /app/
 # cd app
-WORKDIR /app1
+WORKDIR /app
 
 # 安装依赖
 RUN npm i
