@@ -4,6 +4,7 @@ import user from './test_table/user'
 
 const sequelize = new Sequelize('test', 'root', 'dph123', {
   host: '47.92.206.102',
+  port: 8306,
   dialect: 'mysql',
   dialectOptions: {
     // 字符集
