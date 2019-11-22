@@ -1,4 +1,5 @@
 # reinfource
+## koa + sequelize + mysql + typescript
 ### |--src                              资源目录
 ### |---|--app.ts                       入口文件
 ### |---|--config                       配置文件

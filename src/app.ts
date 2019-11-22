@@ -1,13 +1,13 @@
 import Koa from 'koa'
 const app = new Koa()
-import views from 'koa-views'
-import json from 'koa-json'
-import bodyparser from 'koa-bodyparser'
-import logger from 'koa-logger'
-import cors from 'koa2-cors'
-import koaJwt from 'koa-jwt'
-import jwt from 'jwt-simple'
-import koaStatic from 'koa-static'
+import views from 'koa-views' // 可以通过ctx.render进行视图模板渲染
+import json from 'koa-json' // 支持post相应json格式的中间件
+import bodyparser from 'koa-bodyparser' // 处理post请求
+import logger from 'koa-logger' // 输出请求日志，此处只是在控制台打印的
+import cors from 'koa2-cors' // 跨域设置
+import koaJwt from 'koa-jwt' // Json Web Tokens 用于token认证
+import jwt from 'jwt-simple' // 用于操作jwt产生的token，列如间token中的信息提取
+import koaStatic from 'koa-static' // 加载本地文件
 import http from 'http'
 
 import index from './routes/index'
@@ -15,7 +15,7 @@ import user from './routes/user'
 import tokenConfig from './config/token'
 
 // middlewares
-app.use(cors())
+app.use(cors()) // 此处跨域有问题，应该传入参数，不应该在下面直接设置响应头
 app.use(bodyparser({
   enableTypes: ['json', 'form', 'text']
 }))
