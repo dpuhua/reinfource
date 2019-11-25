@@ -1,5 +1,14 @@
 # reinfource
 ## koa + sequelize + mysql + typescript
+#### 目前没有区分开发和生产环境
+#### 
+#### 启动开发环境 npm run dev
+#### 
+#### 生产环境
+#### --| 1、docker：Dockerfile配置
+#### --| 2、pm2：npm run build 之后再 npm run prd
+#### --| 3、node：npm run build 之后再 npm run dist
+#### 
 ### |--src                              资源目录
 ### |---|--app.ts                       入口文件
 ### |---|--config                       配置文件

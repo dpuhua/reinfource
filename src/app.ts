@@ -9,10 +9,14 @@ import koaJwt from 'koa-jwt' // Json Web Tokens 用于token认证
 import jwt from 'jwt-simple' // 用于操作jwt产生的token，列如间token中的信息提取
 import koaStatic from 'koa-static' // 加载本地文件
 import http from 'http'
+import sequelize from '~/db/test' // test数据库
+import * as models from '~/db/test_table' // 模型，test数据库下的表
 
-import index from './routes/index'
-import user from './routes/user'
-import tokenConfig from './config/token'
+import * as routers from './routes' // 路由
+import tokenConfig from './config/token' // token配置
+
+// sequelize添加模型
+sequelize.addModels(Object.values(models))
 
 // middlewares
 app.use(cors()) // 此处跨域有问题，应该传入参数，不应该在下面直接设置响应头
@@ -52,6 +56,7 @@ app.use(async (ctx, next) => {
   })
 })
 
+// 白名单配置
 const widthPath = /^\/api\/user\/(login|register|forget|test)/
 
 // valid
@@ -78,8 +83,9 @@ app.use(async (ctx, next) => {
 })
 
 // routes
-app.use(index.routes())
-app.use(user.routes())
+Object.values(routers).forEach((route) => {
+  app.use(route.routes())
+})
 
 // error-handling
 app.on('error', (err, ctx) => {
