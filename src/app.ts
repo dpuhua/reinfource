@@ -98,4 +98,4 @@ const server = http.createServer(app.callback());
  * Listen on provided port, on all network interfaces.
  */
 
-server.listen('8687');
+server.listen(process.env.port);

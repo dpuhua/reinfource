@@ -1,10 +1,12 @@
 // test 数据库
 import { Sequelize } from 'sequelize-typescript'
 
-const sequelize = new Sequelize('test', 'root', 'dph123', {
-  host: '47.92.206.102',
-  port: 8306,
-  dialect: 'mysql',
+const env: any = process.env
+
+const sequelize = new Sequelize(env.db_name, env.db_user, env.db_pw, {
+  host: env.db_host,
+  port: env.db_port,
+  dialect: env.db_dialect,
   dialectOptions: {
     // 字符集
     bigNumberStrings: true,
@@ -24,8 +26,8 @@ const sequelize = new Sequelize('test', 'root', 'dph123', {
 sequelize.authenticate().then(() => {
   console.log('Connection has been established successfully')
 })
-.catch((err: any) => {
-  console.log('Unable to connect to the database:', err)
-})
+  .catch((err: any) => {
+    console.log('Unable to connect to the database:', err)
+  })
 
 export default sequelize
