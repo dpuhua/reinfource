@@ -19,21 +19,16 @@ import tokenConfig from './config/token' // token配置
 sequelize.addModels(Object.values(models))
 
 // middlewares
-app.use(cors()) // 此处跨域有问题，应该传入参数，不应该在下面直接设置响应头
+// app.use(cors()) // 此处跨域有问题，应该传入参数，不应该在下面直接设置响应头
 app.use(bodyparser({
   enableTypes: ['json', 'form', 'text']
-}))
-app.use(json())
-app.use(logger())
-app.use(koaStatic(__dirname + '/public'))
-app.use(views(__dirname + '/views', {
-  extension: 'pug'
 }))
 
 app.use(async (ctx, next) => {
   // origin
-  ctx.set('Access-Control-Allow-Origin', '*')
+  ctx.set('Access-Control-Allow-Origin', 'http://192.168.1.113:8080')
   ctx.set('Access-Control-Allow-Credentials', 'true')
+  ctx.set('Access-Control-Allow-Headers', 'content-type')
   await next().then( () => {
     if (ctx.status === 404) {
       ctx.body = {
@@ -43,48 +38,14 @@ app.use(async (ctx, next) => {
     }
     // 请求成功返回200状态码，数据正确性通过body的code区分
     ctx.status = 200
-  }).catch( (err) => {
-    // token error
-    if (err.status === 401) {
-      ctx.body = {
-        code: -11,
-        msg: '未登录'
-      }
-    } else {
-      throw err
-    }
   })
 })
 
-// 白名单配置
-const widthPath = /^\/api\/user\/(login|register|forget|test)/
-
-// valid
-app.use(koaJwt({secret: tokenConfig.secret}).unless({
-  path: [widthPath]
-}))
-
-// valid token
-app.use(async (ctx, next) => {
-  if (!widthPath.test(ctx.url)) {
-    const deToken = jwt.decode(ctx.request.header.authorization.replace('Bearer ', ''), tokenConfig.secret)
-    const expTime = deToken.exp - new Date().getTime()
-    if (expTime < 0) {
-      ctx.body = {
-        code: -17,
-        msg: '登录已失效'
-      }
-    } else {
-      await next()
-    }
-  } else {
-    await next()
-  }
-})
-
-// routes
-Object.values(routers).forEach((route) => {
-  app.use(route.routes())
+app.use((ctx) => {
+  const value = 'CfDJ8CQSBq%2FaqPBJhcIm3xawvCmOct57LhkoPiTeDA%2FiLLqhNTukXLu0HAcSeqRt%2BJ9QSLJ21Cs7J5ZmURsNZW93rAeLy%2Bk%2Bi9bi2DyUW7t9ojn0WdC4ICvKfhPFHCc%2BjlcoVoxen305CLMBQwuoMntswLl96T70Gp2yeqVrJw01GRca'
+  ctx.cookies.set('.AspNetCore.Session', value, {
+    path: '/'         // cookie保存路径, 默认是'/，set时更改，get时同时修改，不然会保存不上，服务同时也获取不到
+  })
 })
 
 // error-handling
